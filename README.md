@@ -28,7 +28,7 @@ The system predicts taxi demand one hour ahead for each pickup zone, enabling ta
 
 4. **Production Simulation**: Successfully simulate 60+ days of deployment with automated retraining, logging all predictions, errors, and model versions
 
-### Secondary Goals (If Time Permits)
+### Secondary Goals 
 
 - Zone-specific analysis (Manhattan vs outer boroughs, rush hour vs off-peak)
 - Weather integration for improved accuracy during adverse conditions
