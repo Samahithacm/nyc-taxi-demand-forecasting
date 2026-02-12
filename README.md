@@ -26,7 +26,6 @@ The system predicts taxi demand one hour ahead for each pickup zone, enabling ta
 
 3. **Automated Drift Detection**: Implement monitoring system that detects distribution shifts and triggers retraining within 24 hours of performance degradation
 
-4. **Production Simulation**: Successfully simulate 60+ days of deployment with automated retraining, logging all predictions, errors, and model versions
 
 ### Secondary Goals 
 
@@ -44,7 +43,6 @@ The system predicts taxi demand one hour ahead for each pickup zone, enabling ta
 - **Alternative**: AWS Open Data Registry (https://registry.opendata.aws/nyc-tlc-trip-records-pds/)
 - **Format**: Parquet files (compressed, ~3-4 GB for 3 months)
 - **Scope**: Yellow Taxi data, January-March 2024 (30-50 million trip records)
-- **Key Columns**: `tpep_pickup_datetime`, `PULocationID`, `trip_distance`, `fare_amount`
 
 
 ### Supporting Data
@@ -78,8 +76,3 @@ Aggregate trips to hourly demand per zone, create complete time grid (fill missi
 - Rolling MAPE increases ≥20% for 3+ days
 - PSI > 0.2 for 3+ features
 - Minimum 7 days between retrains
-
-**Simulation**:
-- Static model: Train once on first 30 days, never retrain
-- Adaptive model: Retrain when drift detected
-- Compare error rates over 60+ day simulation
