@@ -7,6 +7,7 @@ import ForecastExplorerPage from "./pages/ForecastExplorerPage";
 import LivePredictionPage from "./pages/LivePredictionPage";
 import ModelPage from "./pages/ModelPage";
 import MonitoringPage from "./pages/MonitoringPage";
+import ZoneAnalysisPage from "./pages/ZoneAnalysisPage";
 import {
   getDriftMetrics,
   getPredictions,
@@ -43,6 +44,7 @@ export default function App() {
       { id: "dashboard", label: "Dashboard", icon: "Home" },
       { id: "predict", label: "Live Prediction", icon: "Sparkles" },
       { id: "explorer", label: "Forecast Explorer", icon: "TrendingUp" },
+      { id: "zones", label: "Zone Analysis", icon: "Map" },
       { id: "model", label: "Model Details", icon: "Cpu" },
       { id: "monitoring", label: "Monitoring", icon: "Activity" },
     ],
@@ -168,6 +170,13 @@ export default function App() {
               zones={data.zones.zones}
               boroughs={boroughs}
               predictionsData={data.predictions}
+            />
+          )}
+
+          {!loading && !error && data && activeSection === "zones" && (
+            <ZoneAnalysisPage
+              zones={data.zones.zones}
+              zonePerformance={data.zonePerformance}
             />
           )}
 

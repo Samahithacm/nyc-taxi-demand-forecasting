@@ -1,12 +1,13 @@
 # NYC Taxi Demand Forecasting Frontend
 
-React dashboard for the NYC Taxi Demand Forecasting project. The app reads static JSON exports from `public/data/` and visualizes model performance, monitoring health, live-style predictions, and historical forecast exploration.
+React dashboard for the NYC Taxi Demand Forecasting project. The app reads static JSON exports from `public/data/` and visualizes model performance, monitoring health, live-style predictions, historical forecast exploration, and geographic zone analysis.
 
 ## Pages
 
 - **Dashboard**: Selected-zone demand overview, current demand, model status, and recent hourly forecast performance.
 - **Live Prediction**: Tool-style lookup page for choosing a zone, day of week, and hour, then returning a pre-computed LightGBM demand prediction with confidence range, category, historical comparison, explanation factors, and hourly context.
 - **Forecast Explorer**: Historical analysis page for filtering `predictions.json` by zone and date range, toggling static/adaptive model lines, and reviewing error distribution and hourly demand patterns.
+- **Zone Analysis**: Interactive Leaflet map of the top 20 NYC taxi zones, color-coded by demand, forecast accuracy, or adaptive improvement with click-to-explore zone metrics.
 - **Model Details**: LightGBM architecture, top features, performance metrics, model settings, and adaptive simulation summary.
 - **Monitoring**: Drift metrics, weekly static-versus-adaptive sMAPE, and retrain event history.
 
@@ -16,6 +17,7 @@ React dashboard for the NYC Taxi Demand Forecasting project. The app reads stati
 - Vite
 - Tailwind CSS v4
 - Recharts
+- Leaflet and React-Leaflet
 - lucide-react
 - date-fns
 
@@ -56,5 +58,6 @@ Placeholders:
 - `screenshots/dashboard.png`
 - `screenshots/live-prediction.png`
 - `screenshots/forecast-explorer.png`
+- `screenshots/zone-analysis.png`
 - `screenshots/model-details.png`
 - `screenshots/monitoring.png`

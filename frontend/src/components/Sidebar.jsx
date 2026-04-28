@@ -1,9 +1,10 @@
-import { Activity, Cpu, Home, Sparkles, TrendingUp } from "lucide-react";
+import { Activity, Cpu, Home, Map, Sparkles, TrendingUp } from "lucide-react";
 
 const ICONS = {
   Activity,
   Cpu,
   Home,
+  Map,
   Sparkles,
   TrendingUp,
 };

@@ -1,1 +1,29 @@
+@import "leaflet/dist/leaflet.css";
 @import "tailwindcss";
+
+.leaflet-container {
+  z-index: 0;
+  background: #0f172a;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #0f172a;
+  color: white;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.leaflet-popup-tip {
+  background: #0f172a;
+}
+
+.leaflet-popup-content {
+  margin: 12px 14px;
+}
+
+.leaflet-tooltip {
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: white;
+  border-radius: 8px;
+}
