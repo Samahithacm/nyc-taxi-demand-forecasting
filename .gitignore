@@ -1,0 +1,7 @@
+# Large model files (regenerable from notebooks)
+models/*.pkl
+models/adaptive_model_v*.pkl
+
+# Keep metadata files
+!models/feature_columns.json
+!models/modeling_summary_v1.json
