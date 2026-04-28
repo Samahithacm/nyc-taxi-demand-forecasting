@@ -45,6 +45,10 @@ export async function getTimePeriodAnalysis() {
   return fetchJSON("time_period_analysis.json");
 }
 
+export async function getPredictionLookup() {
+  return fetchJSON("prediction_lookup.json");
+}
+
 export async function getAllFrontendData() {
   const [
     summary,

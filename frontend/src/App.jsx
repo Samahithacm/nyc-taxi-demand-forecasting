@@ -3,6 +3,8 @@ import Sidebar from "./components/Sidebar";
 import ErrorState from "./components/ui/ErrorState";
 import LoadingState from "./components/ui/LoadingState";
 import DashboardPage from "./pages/DashboardPage";
+import ForecastExplorerPage from "./pages/ForecastExplorerPage";
+import LivePredictionPage from "./pages/LivePredictionPage";
 import ModelPage from "./pages/ModelPage";
 import MonitoringPage from "./pages/MonitoringPage";
 import {
@@ -38,9 +40,11 @@ export default function App() {
 
   const navItems = useMemo(
     () => [
-      { id: "dashboard", label: "Dashboard" },
-      { id: "model", label: "Model" },
-      { id: "monitoring", label: "Monitoring" },
+      { id: "dashboard", label: "Dashboard", icon: "Home" },
+      { id: "predict", label: "Live Prediction", icon: "Sparkles" },
+      { id: "explorer", label: "Forecast Explorer", icon: "TrendingUp" },
+      { id: "model", label: "Model Details", icon: "Cpu" },
+      { id: "monitoring", label: "Monitoring", icon: "Activity" },
     ],
     []
   );
@@ -105,17 +109,24 @@ export default function App() {
     [data, selectedBorough]
   );
 
-  useEffect(() => {
-    if (!zonesForSelectedBorough.length) return;
-    if (!zonesForSelectedBorough.some((zone) => zone.id === Number(selectedZone))) {
-      setSelectedZone(zonesForSelectedBorough[0].id);
-    }
-  }, [zonesForSelectedBorough, selectedZone]);
+  const effectiveSelectedZone = useMemo(
+    () =>
+      zonesForSelectedBorough.some((zone) => zone.id === Number(selectedZone))
+        ? Number(selectedZone)
+        : zonesForSelectedBorough[0]?.id || null,
+    [selectedZone, zonesForSelectedBorough]
+  );
 
   const selectedZoneObject = useMemo(
-    () => data?.zones?.zones?.find((zone) => zone.id === Number(selectedZone)) || null,
-    [data, selectedZone]
+    () => data?.zones?.zones?.find((zone) => zone.id === Number(effectiveSelectedZone)) || null,
+    [data, effectiveSelectedZone]
   );
+
+  function handleSidebarBoroughChange(nextBorough) {
+    setSelectedBorough(nextBorough);
+    const nextZones = getZonesForBorough(data?.zones, nextBorough);
+    setSelectedZone(nextZones[0]?.id || null);
+  }
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
@@ -126,9 +137,9 @@ export default function App() {
           setActiveSection={setActiveSection}
           boroughs={boroughs}
           selectedBorough={selectedBorough}
-          onBoroughChange={setSelectedBorough}
+          onBoroughChange={handleSidebarBoroughChange}
           zones={zonesForSelectedBorough}
-          selectedZone={selectedZone}
+          selectedZone={effectiveSelectedZone}
           onZoneChange={(zoneId) => setSelectedZone(Number(zoneId))}
           summary={data?.summary}
         />
@@ -145,6 +156,18 @@ export default function App() {
               data={data}
               selectedBorough={selectedBorough}
               selectedZone={selectedZoneObject}
+            />
+          )}
+
+          {!loading && !error && data && activeSection === "predict" && (
+            <LivePredictionPage zones={data.zones.zones} boroughs={boroughs} />
+          )}
+
+          {!loading && !error && data && activeSection === "explorer" && (
+            <ForecastExplorerPage
+              zones={data.zones.zones}
+              boroughs={boroughs}
+              predictionsData={data.predictions}
             />
           )}
 

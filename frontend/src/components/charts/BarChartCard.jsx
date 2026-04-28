@@ -2,6 +2,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Cell,
   Legend,
   ResponsiveContainer,
   Tooltip,
@@ -16,7 +17,7 @@ import {
  * @param {string} [props.title] Card title.
  * @param {string} [props.subtitle] Card subtitle.
  * @param {Array<object>} props.data Recharts data array.
- * @param {Array<{dataKey: string, name: string, color: string}>} props.bars Bar definitions.
+ * @param {Array<{dataKey: string, name: string, color: string, colorKey?: string}>} props.bars Bar definitions.
  * @param {string} [props.xAxisKey] X-axis data key.
  * @param {number} [props.height] Chart height in pixels.
  * @param {boolean} [props.showLegend] Whether to render the chart legend.
@@ -58,7 +59,12 @@ export default function BarChartCard({
               name={bar.name}
               fill={bar.color}
               radius={[6, 6, 0, 0]}
-            />
+            >
+              {bar.colorKey &&
+                data.map((entry, cellIndex) => (
+                  <Cell key={`${bar.dataKey}-${cellIndex}`} fill={entry[bar.colorKey] || bar.color} />
+                ))}
+            </Bar>
           ))}
         </BarChart>
       </ResponsiveContainer>

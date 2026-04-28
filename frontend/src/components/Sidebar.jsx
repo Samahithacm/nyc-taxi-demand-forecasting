@@ -1,3 +1,13 @@
+import { Activity, Cpu, Home, Sparkles, TrendingUp } from "lucide-react";
+
+const ICONS = {
+  Activity,
+  Cpu,
+  Home,
+  Sparkles,
+  TrendingUp,
+};
+
 export default function Sidebar({
   navItems,
   activeSection,
@@ -33,19 +43,24 @@ export default function Sidebar({
       </div>
 
       <nav className="mt-6 space-y-2">
-        {navItems.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setActiveSection(item.id)}
-            className={`w-full rounded-md px-4 py-3 text-left text-sm transition ${
-              activeSection === item.id
-                ? "bg-white text-neutral-950"
-                : "border border-neutral-800 bg-neutral-900 text-neutral-300 hover:bg-neutral-800"
-            }`}
-          >
-            {item.label}
-          </button>
-        ))}
+        {navItems.map((item) => {
+          const Icon = ICONS[item.icon] || Home;
+
+          return (
+            <button
+              key={item.id}
+              onClick={() => setActiveSection(item.id)}
+              className={`flex w-full items-center gap-3 rounded-md px-4 py-3 text-left text-sm transition ${
+                activeSection === item.id
+                  ? "bg-white text-neutral-950"
+                  : "border border-neutral-800 bg-neutral-900 text-neutral-300 hover:bg-neutral-800"
+              }`}
+            >
+              <Icon size={17} />
+              <span>{item.label}</span>
+            </button>
+          );
+        })}
       </nav>
 
       <div className="mt-6 rounded-lg border border-neutral-800 bg-neutral-900 p-5">
