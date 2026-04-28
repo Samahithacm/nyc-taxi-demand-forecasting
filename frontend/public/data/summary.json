@@ -1,0 +1,48 @@
+{
+  "model_performance": {
+    "test_smape": 22.78,
+    "test_rmse": 37.17,
+    "test_mae": 24.57,
+    "test_wape": 16.33,
+    "improvement_over_baseline": 46.1,
+    "best_baseline": "seasonal_lag24",
+    "best_baseline_smape": 42.27
+  },
+  "simulation_results": {
+    "static_avg_smape": 25.98,
+    "adaptive_avg_smape": 24.78,
+    "improvement_pct": 4.61,
+    "p_value": 0.0118,
+    "is_significant": true,
+    "total_weeks": 9,
+    "total_retrains": 8,
+    "best_week": {
+      "date": "2024-03-21",
+      "improvement": 10.85
+    },
+    "worst_week": {
+      "date": "2024-02-15",
+      "improvement": -2.66
+    }
+  },
+  "data_info": {
+    "training_period": "2024-01-01 to 2024-01-30",
+    "simulation_period": "2024-02-01 to 2024-03-31",
+    "total_predictions": 28800,
+    "zones_count": 20,
+    "demand_coverage_pct": 63.05
+  },
+  "model_info": {
+    "model_type": "LightGBM",
+    "top_features": [
+      "lag_168h",
+      "hour",
+      "lag_24h",
+      "lag_1h",
+      "zone_id"
+    ],
+    "trained_at": "2024-01-30",
+    "current_version": "adaptive_v9",
+    "drift_status": "healthy"
+  }
+}

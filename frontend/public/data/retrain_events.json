@@ -1,0 +1,78 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "timestamp": "2024-02-08T00:00:00",
+      "trigger_reason": "adaptive sMAPE >= 20% above reference baseline for 3 consecutive days",
+      "model_version": "adaptive_v2",
+      "training_size": 14400,
+      "training_duration_seconds": 2.4,
+      "improvement_after": -1.19
+    },
+    {
+      "id": 2,
+      "timestamp": "2024-02-15T00:00:00",
+      "trigger_reason": "adaptive sMAPE >= 20% above reference baseline for 3 consecutive days",
+      "model_version": "adaptive_v3",
+      "training_size": 14400,
+      "training_duration_seconds": 1.81,
+      "improvement_after": -3.42
+    },
+    {
+      "id": 3,
+      "timestamp": "2024-02-22T00:00:00",
+      "trigger_reason": "adaptive sMAPE >= 20% above reference baseline for 3 consecutive days",
+      "model_version": "adaptive_v4",
+      "training_size": 14400,
+      "training_duration_seconds": 2.62,
+      "improvement_after": 0.85
+    },
+    {
+      "id": 4,
+      "timestamp": "2024-02-29T00:00:00",
+      "trigger_reason": "adaptive sMAPE >= 20% above reference baseline for 3 consecutive days",
+      "model_version": "adaptive_v5",
+      "training_size": 14400,
+      "training_duration_seconds": 4.51,
+      "improvement_after": 12.35
+    },
+    {
+      "id": 5,
+      "timestamp": "2024-03-07T00:00:00",
+      "trigger_reason": "adaptive sMAPE >= 20% above reference baseline for 3 consecutive days",
+      "model_version": "adaptive_v6",
+      "training_size": 14400,
+      "training_duration_seconds": 1.29,
+      "improvement_after": -5.61
+    },
+    {
+      "id": 6,
+      "timestamp": "2024-03-14T00:00:00",
+      "trigger_reason": "adaptive sMAPE >= 20% above reference baseline for 3 consecutive days",
+      "model_version": "adaptive_v7",
+      "training_size": 14400,
+      "training_duration_seconds": 0.71,
+      "improvement_after": 1.97
+    },
+    {
+      "id": 7,
+      "timestamp": "2024-03-21T00:00:00",
+      "trigger_reason": "adaptive sMAPE >= 20% above reference baseline for 3 consecutive days",
+      "model_version": "adaptive_v8",
+      "training_size": 14400,
+      "training_duration_seconds": 2.56,
+      "improvement_after": 2.52
+    },
+    {
+      "id": 8,
+      "timestamp": "2024-03-28T00:00:00",
+      "trigger_reason": "KS-test drift for 3+ important features",
+      "model_version": "adaptive_v9",
+      "training_size": 14400,
+      "training_duration_seconds": 2.19,
+      "improvement_after": -9.68
+    }
+  ],
+  "total_events": 8,
+  "avg_days_between_retrains": 7.0
+}

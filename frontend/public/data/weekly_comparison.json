@@ -1,0 +1,210 @@
+{
+  "weeks": [
+    {
+      "week_start": "2024-02-01",
+      "week_end": "2024-02-07",
+      "static": {
+        "smape": 25.26,
+        "rmse": 31.89,
+        "mae": 20.95,
+        "wape": 15.67
+      },
+      "adaptive": {
+        "smape": 25.26,
+        "rmse": 31.89,
+        "mae": 20.95,
+        "wape": 15.67
+      },
+      "improvement_smape": 0.0,
+      "model_version_used": "adaptive_v1",
+      "retrain_occurred": true
+    },
+    {
+      "week_start": "2024-02-08",
+      "week_end": "2024-02-14",
+      "static": {
+        "smape": 26.78,
+        "rmse": 38.74,
+        "mae": 24.94,
+        "wape": 18.59
+      },
+      "adaptive": {
+        "smape": 25.56,
+        "rmse": 37.67,
+        "mae": 24.3,
+        "wape": 18.11
+      },
+      "improvement_smape": 4.58,
+      "model_version_used": "adaptive_v2",
+      "retrain_occurred": true
+    },
+    {
+      "week_start": "2024-02-15",
+      "week_end": "2024-02-21",
+      "static": {
+        "smape": 25.74,
+        "rmse": 33.89,
+        "mae": 22.22,
+        "wape": 16.75
+      },
+      "adaptive": {
+        "smape": 26.43,
+        "rmse": 37.09,
+        "mae": 23.63,
+        "wape": 17.82
+      },
+      "improvement_smape": -2.66,
+      "model_version_used": "adaptive_v3",
+      "retrain_occurred": true
+    },
+    {
+      "week_start": "2024-02-22",
+      "week_end": "2024-02-28",
+      "static": {
+        "smape": 25.81,
+        "rmse": 39.73,
+        "mae": 23.82,
+        "wape": 16.91
+      },
+      "adaptive": {
+        "smape": 26.21,
+        "rmse": 40.93,
+        "mae": 24.54,
+        "wape": 17.42
+      },
+      "improvement_smape": -1.53,
+      "model_version_used": "adaptive_v4",
+      "retrain_occurred": true
+    },
+    {
+      "week_start": "2024-02-29",
+      "week_end": "2024-03-06",
+      "static": {
+        "smape": 25.44,
+        "rmse": 40.17,
+        "mae": 25.59,
+        "wape": 16.95
+      },
+      "adaptive": {
+        "smape": 22.97,
+        "rmse": 37.56,
+        "mae": 23.55,
+        "wape": 15.6
+      },
+      "improvement_smape": 9.72,
+      "model_version_used": "adaptive_v5",
+      "retrain_occurred": true
+    },
+    {
+      "week_start": "2024-03-07",
+      "week_end": "2024-03-13",
+      "static": {
+        "smape": 26.57,
+        "rmse": 40.93,
+        "mae": 25.64,
+        "wape": 16.87
+      },
+      "adaptive": {
+        "smape": 24.26,
+        "rmse": 37.96,
+        "mae": 23.48,
+        "wape": 15.45
+      },
+      "improvement_smape": 8.7,
+      "model_version_used": "adaptive_v6",
+      "retrain_occurred": true
+    },
+    {
+      "week_start": "2024-03-14",
+      "week_end": "2024-03-20",
+      "static": {
+        "smape": 25.48,
+        "rmse": 41.73,
+        "mae": 26.7,
+        "wape": 17.49
+      },
+      "adaptive": {
+        "smape": 23.78,
+        "rmse": 37.75,
+        "mae": 24.17,
+        "wape": 15.83
+      },
+      "improvement_smape": 6.66,
+      "model_version_used": "adaptive_v7",
+      "retrain_occurred": true
+    },
+    {
+      "week_start": "2024-03-21",
+      "week_end": "2024-03-27",
+      "static": {
+        "smape": 26.0,
+        "rmse": 39.72,
+        "mae": 25.6,
+        "wape": 17.31
+      },
+      "adaptive": {
+        "smape": 23.18,
+        "rmse": 34.92,
+        "mae": 22.55,
+        "wape": 15.25
+      },
+      "improvement_smape": 10.85,
+      "model_version_used": "adaptive_v8",
+      "retrain_occurred": true
+    },
+    {
+      "week_start": "2024-03-28",
+      "week_end": "2024-03-31",
+      "static": {
+        "smape": 26.76,
+        "rmse": 44.82,
+        "mae": 29.31,
+        "wape": 20.55
+      },
+      "adaptive": {
+        "smape": 25.42,
+        "rmse": 40.22,
+        "mae": 27.41,
+        "wape": 19.22
+      },
+      "improvement_smape": 4.98,
+      "model_version_used": "adaptive_v9",
+      "retrain_occurred": false
+    }
+  ],
+  "cumulative": {
+    "static_smape_progression": [
+      25.26,
+      26.02,
+      25.93,
+      25.9,
+      25.81,
+      25.93,
+      25.87,
+      25.88,
+      25.98
+    ],
+    "adaptive_smape_progression": [
+      25.26,
+      25.41,
+      25.75,
+      25.86,
+      25.28,
+      25.11,
+      24.92,
+      24.7,
+      24.78
+    ],
+    "dates": [
+      "2024-02-01",
+      "2024-02-08",
+      "2024-02-15",
+      "2024-02-22",
+      "2024-02-29",
+      "2024-03-07",
+      "2024-03-14",
+      "2024-03-21",
+      "2024-03-28"
+    ]
+  }
+}

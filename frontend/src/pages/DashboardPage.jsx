@@ -1,104 +1,110 @@
-import StatCard from "../components/StatCard";
+import { format } from "date-fns";
+import LineChartCard from "../components/charts/LineChartCard";
+import MetricCard from "../components/charts/MetricCard";
 
-export default function DashboardPage({
-  selectedBorough,
-  selectedZone,
-  summary,
-  hourlyForecast,
-}) {
-  const maxForecast =
-    hourlyForecast.length > 0 ? Math.max(...hourlyForecast.map((d) => d.demand)) : 1;
+function formatNumber(value) {
+  return value?.toLocaleString("en-US", { maximumFractionDigits: 0 }) || "n/a";
+}
+
+function getLatestRetrain(retrainEvents) {
+  const latest = retrainEvents.events.at(-1);
+  if (!latest) return "No retrain";
+  return `${latest.model_version} on ${format(new Date(latest.timestamp), "MMM d")}`;
+}
+
+export default function DashboardPage({ data, selectedBorough, selectedZone }) {
+  const { summary, predictions, weeklyComparison, retrainEvents } = data;
+  const selectedZonePredictions = predictions.zones[String(selectedZone.id)]?.predictions || [];
+  const latestPrediction = selectedZonePredictions.at(-1);
+  const previousPrediction = selectedZonePredictions.at(-2);
+  const demandTrend =
+    latestPrediction && previousPrediction && previousPrediction.actual
+      ? ((latestPrediction.actual - previousPrediction.actual) / previousPrediction.actual) * 100
+      : null;
+
+  const predictionChartData = selectedZonePredictions.slice(-48).map((row) => ({
+    name: format(new Date(row.timestamp), "MMM d ha"),
+    actual: row.actual,
+    static_pred: row.static_pred,
+    adaptive_pred: row.adaptive_pred,
+  }));
+
+  const weeklyChartData = weeklyComparison.weeks.map((week) => ({
+    name: format(new Date(week.week_start), "MMM d"),
+    static_smape: week.static.smape,
+    adaptive_smape: week.adaptive.smape,
+  }));
 
   return (
-    <div>
-      <header className="mb-8 rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 p-8 shadow-2xl">
+    <div className="space-y-8">
+      <header className="rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 p-8 shadow-2xl">
         <div className="mb-3 inline-flex items-center rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-300">
           Home Dashboard
         </div>
         <h2 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          Demand analytics for {selectedZone}
+          Demand analytics for {selectedZone.name}
         </h2>
         <p className="mt-4 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">
-          Use the selected borough and zone to inspect current demand, near-term forecasts,
-          and production-style model analytics for the NYC taxi forecasting system.
+          {selectedBorough} zone #{selectedZone.rank}, using static JSON exports from
+          the completed modeling and monitoring notebooks.
         </p>
       </header>
 
-      <section className="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <MetricCard
           title="Current Hour Demand"
-          value={`${summary.currentHourDemand}`}
-          subtitle={`${summary.demandChangePct}% above recent average`}
+          value={formatNumber(latestPrediction?.actual)}
+          subtitle="Latest actual demand in selected zone"
+          trend={demandTrend === null ? null : demandTrend >= 0 ? "up" : "down"}
+          trendValue={demandTrend === null ? "n/a" : `${demandTrend.toFixed(1)}%`}
           accent="text-cyan-300"
         />
-        <StatCard
+        <MetricCard
           title="MAPE"
-          value={`${summary.mape}%`}
-          subtitle="Latest evaluation window"
+          value={`${summary.model_performance.test_smape}%`}
+          subtitle="LightGBM test sMAPE"
+          trend="down"
+          trendValue={`${summary.model_performance.improvement_over_baseline}%`}
           accent="text-emerald-300"
         />
-        <StatCard
+        <MetricCard
           title="Model Status"
-          value={summary.modelStatus}
-          subtitle={summary.driftStatus}
+          value={summary.model_info.drift_status}
+          subtitle={`Current version: ${summary.model_info.current_version}`}
           accent="text-amber-300"
         />
-        <StatCard
+        <MetricCard
           title="Last Retrain"
-          value="Recent"
-          subtitle={summary.lastRetrain}
+          value={summary.model_info.current_version}
+          subtitle={getLatestRetrain(retrainEvents)}
           accent="text-violet-300"
         />
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl">
-          <div className="mb-6 flex items-center justify-between">
-            <div>
-              <h3 className="text-xl font-semibold">Demand Forecast</h3>
-              <p className="mt-1 text-sm text-slate-400">
-                Projected demand trend for the next few hours in the selected zone.
-              </p>
-            </div>
-            <div className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs text-cyan-300">
-              Preview mode
-            </div>
-          </div>
+      <LineChartCard
+        title="Selected Zone Hourly Demand"
+        subtitle="Last 48 hours in predictions.json: actual demand, static forecast, and adaptive forecast."
+        data={predictionChartData}
+        xAxisKey="name"
+        height={360}
+        lines={[
+          { dataKey: "actual", name: "Actual", color: "#22d3ee" },
+          { dataKey: "static_pred", name: "Static prediction", color: "#a78bfa" },
+          { dataKey: "adaptive_pred", name: "Adaptive prediction", color: "#34d399" },
+        ]}
+      />
 
-          <div className="flex h-72 items-end gap-3 rounded-2xl bg-slate-900/80 p-4">
-            {hourlyForecast.map((item) => (
-              <div key={item.hour} className="flex flex-1 flex-col items-center justify-end gap-3">
-                <div className="text-xs text-slate-400">{item.demand}</div>
-                <div
-                  className="w-full rounded-t-2xl bg-gradient-to-t from-cyan-500 to-blue-400"
-                  style={{ height: `${(item.demand / maxForecast) * 180}px` }}
-                />
-                <div className="text-sm text-slate-300">{item.hour}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl">
-          <h3 className="text-xl font-semibold">Quick Insights</h3>
-          <div className="mt-6 space-y-4">
-            <div className="rounded-2xl border border-white/10 bg-slate-900/80 p-4">
-              <div className="text-sm text-slate-400">Selected Borough</div>
-              <div className="mt-2 text-lg font-medium">{selectedBorough}</div>
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-slate-900/80 p-4">
-              <div className="text-sm text-slate-400">Selected Zone</div>
-              <div className="mt-2 text-lg font-medium">{selectedZone}</div>
-            </div>
-            <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
-              <div className="text-sm font-medium text-emerald-300">Monitoring Summary</div>
-              <div className="mt-2 text-sm leading-6 text-slate-300">
-                No alert-level drift has been detected for this zone. Current model metrics remain within target thresholds.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <LineChartCard
+        title="Recent Performance"
+        subtitle="Weekly sMAPE comparison from weekly_comparison.json."
+        data={weeklyChartData}
+        xAxisKey="name"
+        height={320}
+        lines={[
+          { dataKey: "static_smape", name: "Static sMAPE", color: "#a78bfa" },
+          { dataKey: "adaptive_smape", name: "Adaptive sMAPE", color: "#34d399" },
+        ]}
+      />
     </div>
   );
 }

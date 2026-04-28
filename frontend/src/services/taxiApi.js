@@ -1,46 +1,136 @@
-import {
-  boroughZoneMap,
-  summary,
-  hourlyForecast,
-  recentPerformance,
-  modelFunctions,
-  modelSettings,
-} from "../data/mockData";
+const DATA_BASE = "/data";
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+async function fetchJSON(filename) {
+  try {
+    const response = await fetch(`${DATA_BASE}/${filename}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch ${filename}: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(`Error loading ${filename}:`, error);
+    throw error;
+  }
+}
 
+export async function getSummary() {
+  return fetchJSON("summary.json");
+}
+
+export async function getZones() {
+  return fetchJSON("zones.json");
+}
+
+export async function getPredictions() {
+  return fetchJSON("predictions.json");
+}
+
+export async function getDriftMetrics() {
+  return fetchJSON("drift_metrics.json");
+}
+
+export async function getRetrainEvents() {
+  return fetchJSON("retrain_events.json");
+}
+
+export async function getWeeklyComparison() {
+  return fetchJSON("weekly_comparison.json");
+}
+
+export async function getZonePerformance() {
+  return fetchJSON("zone_performance.json");
+}
+
+export async function getTimePeriodAnalysis() {
+  return fetchJSON("time_period_analysis.json");
+}
+
+export async function getAllFrontendData() {
+  const [
+    summary,
+    zones,
+    predictions,
+    driftMetrics,
+    retrainEvents,
+    weeklyComparison,
+    zonePerformance,
+    timePeriodAnalysis,
+  ] = await Promise.all([
+    getSummary(),
+    getZones(),
+    getPredictions(),
+    getDriftMetrics(),
+    getRetrainEvents(),
+    getWeeklyComparison(),
+    getZonePerformance(),
+    getTimePeriodAnalysis(),
+  ]);
+
+  return {
+    summary,
+    zones,
+    predictions,
+    driftMetrics,
+    retrainEvents,
+    weeklyComparison,
+    zonePerformance,
+    timePeriodAnalysis,
+  };
+}
+
+// Backward compatibility - DO NOT REMOVE until all pages updated.
 export async function getBoroughs() {
-  await delay(150);
-  return Object.keys(boroughZoneMap);
+  const data = await getZones();
+  return data.boroughs;
 }
 
-export async function getZones(borough) {
-  await delay(150);
-  return boroughZoneMap[borough] || [];
-}
+// Backward compatibility - DO NOT REMOVE until all pages updated.
+export async function getDashboardData(borough, zoneNameOrId) {
+  const [summary, zonesData, predictionsData, weeklyComparison, zonePerformance] =
+    await Promise.all([
+      getSummary(),
+      getZones(),
+      getPredictions(),
+      getWeeklyComparison(),
+      getZonePerformance(),
+    ]);
 
-export async function getDashboardData(borough, zone) {
-  await delay(150);
+  const selectedZone =
+    zonesData.zones.find((zone) => String(zone.id) === String(zoneNameOrId)) ||
+    zonesData.zones.find((zone) => zone.name === zoneNameOrId) ||
+    zonesData.zones.find((zone) => zone.borough === borough) ||
+    zonesData.zones[0];
+
   return {
     borough,
-    zone,
+    zone: selectedZone,
     summary,
-    hourlyForecast,
+    weeklyComparison,
+    zonePerformance,
+    predictions: predictionsData.zones[String(selectedZone.id)]?.predictions || [],
   };
 }
 
+// Backward compatibility - DO NOT REMOVE until all pages updated.
 export async function getModelData() {
-  await delay(150);
-  return {
-    modelFunctions,
-    modelSettings,
-  };
+  const [summary, weeklyComparison, zonePerformance, timePeriodAnalysis] = await Promise.all([
+    getSummary(),
+    getWeeklyComparison(),
+    getZonePerformance(),
+    getTimePeriodAnalysis(),
+  ]);
+
+  return { summary, weeklyComparison, zonePerformance, timePeriodAnalysis };
 }
 
+// Backward compatibility - DO NOT REMOVE until all pages updated.
 export async function getMonitoringData() {
-  await delay(150);
-  return {
-    summary,
-    recentPerformance,
-  };
+  const [summary, weeklyComparison, driftMetrics, retrainEvents] = await Promise.all([
+    getSummary(),
+    getWeeklyComparison(),
+    getDriftMetrics(),
+    getRetrainEvents(),
+  ]);
+
+  return { summary, weeklyComparison, driftMetrics, retrainEvents };
 }

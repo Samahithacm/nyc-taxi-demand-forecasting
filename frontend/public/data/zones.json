@@ -1,0 +1,215 @@
+{
+  "zones": [
+    {
+      "id": 161,
+      "name": "Midtown Center",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 310356,
+      "rank": 1,
+      "latitude": 40.7587,
+      "longitude": -73.9787
+    },
+    {
+      "id": 237,
+      "name": "Upper East Side South",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 296431,
+      "rank": 2,
+      "latitude": 40.7736,
+      "longitude": -73.9566
+    },
+    {
+      "id": 132,
+      "name": "JFK Airport",
+      "borough": "Queens",
+      "service_zone": "Airports",
+      "total_demand": 284505,
+      "rank": 3,
+      "latitude": 40.6413,
+      "longitude": -73.7781
+    },
+    {
+      "id": 236,
+      "name": "Upper East Side North",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 280044,
+      "rank": 4,
+      "latitude": 40.7831,
+      "longitude": -73.9507
+    },
+    {
+      "id": 162,
+      "name": "Midtown East",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 229742,
+      "rank": 5,
+      "latitude": 40.7558,
+      "longitude": -73.9724
+    },
+    {
+      "id": 230,
+      "name": "Times Sq/Theatre District",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 225246,
+      "rank": 6,
+      "latitude": 40.759,
+      "longitude": -73.9851
+    },
+    {
+      "id": 186,
+      "name": "Penn Station/Madison Sq West",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 215183,
+      "rank": 7,
+      "latitude": 40.7484,
+      "longitude": -73.9925
+    },
+    {
+      "id": 142,
+      "name": "Lincoln Square East",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 212233,
+      "rank": 8,
+      "latitude": 40.7739,
+      "longitude": -73.982
+    },
+    {
+      "id": 138,
+      "name": "LaGuardia Airport",
+      "borough": "Queens",
+      "service_zone": "Airports",
+      "total_demand": 194829,
+      "rank": 9,
+      "latitude": 40.7769,
+      "longitude": -73.874
+    },
+    {
+      "id": 239,
+      "name": "Upper West Side South",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 193256,
+      "rank": 10,
+      "latitude": 40.783,
+      "longitude": -73.9788
+    },
+    {
+      "id": 163,
+      "name": "Midtown North",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 190526,
+      "rank": 11,
+      "latitude": 40.7643,
+      "longitude": -73.9776
+    },
+    {
+      "id": 170,
+      "name": "Murray Hill",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 189472,
+      "rank": 12,
+      "latitude": 40.7479,
+      "longitude": -73.9757
+    },
+    {
+      "id": 234,
+      "name": "Union Sq",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 181758,
+      "rank": 13,
+      "latitude": 40.7359,
+      "longitude": -73.9911
+    },
+    {
+      "id": 68,
+      "name": "East Chelsea",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 175450,
+      "rank": 14,
+      "latitude": 40.7465,
+      "longitude": -74.0014
+    },
+    {
+      "id": 48,
+      "name": "Clinton East",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 170507,
+      "rank": 15,
+      "latitude": 40.7638,
+      "longitude": -73.9925
+    },
+    {
+      "id": 79,
+      "name": "East Village",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 169019,
+      "rank": 16,
+      "latitude": 40.7278,
+      "longitude": -73.9853
+    },
+    {
+      "id": 249,
+      "name": "West Village",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 162602,
+      "rank": 17,
+      "latitude": 40.7344,
+      "longitude": -74.0027
+    },
+    {
+      "id": 141,
+      "name": "Lenox Hill West",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 155134,
+      "rank": 18,
+      "latitude": 40.7654,
+      "longitude": -73.9614
+    },
+    {
+      "id": 164,
+      "name": "Midtown South",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 150947,
+      "rank": 19,
+      "latitude": 40.7485,
+      "longitude": -73.984
+    },
+    {
+      "id": 140,
+      "name": "Lenox Hill East",
+      "borough": "Manhattan",
+      "service_zone": "Yellow Zone",
+      "total_demand": 133059,
+      "rank": 20,
+      "latitude": 40.7685,
+      "longitude": -73.9586
+    }
+  ],
+  "boroughs": [
+    "Bronx",
+    "Brooklyn",
+    "EWR",
+    "Manhattan",
+    "Queens",
+    "Staten Island",
+    "Unknown"
+  ],
+  "total_zones": 20,
+  "coordinate_note": "Approximate display centroids for TLC taxi zones."
+}

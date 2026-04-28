@@ -1,92 +1,121 @@
 import { useEffect, useMemo, useState } from "react";
 import Sidebar from "./components/Sidebar";
+import ErrorState from "./components/ui/ErrorState";
+import LoadingState from "./components/ui/LoadingState";
 import DashboardPage from "./pages/DashboardPage";
 import ModelPage from "./pages/ModelPage";
 import MonitoringPage from "./pages/MonitoringPage";
 import {
-  getBoroughs,
+  getDriftMetrics,
+  getPredictions,
+  getRetrainEvents,
+  getSummary,
+  getTimePeriodAnalysis,
+  getWeeklyComparison,
+  getZonePerformance,
   getZones,
-  getDashboardData,
-  getModelData,
-  getMonitoringData,
 } from "./services/taxiApi";
+
+function getModeledBoroughs(zonesData) {
+  const modeled = new Set(zonesData?.zones?.map((zone) => zone.borough) || []);
+  return (zonesData?.boroughs || []).filter((borough) => modeled.has(borough));
+}
+
+function getZonesForBorough(zonesData, borough) {
+  return (zonesData?.zones || [])
+    .filter((zone) => zone.borough === borough)
+    .sort((a, b) => a.rank - b.rank);
+}
 
 export default function App() {
   const [activeSection, setActiveSection] = useState("dashboard");
-
-  const [boroughs, setBoroughs] = useState([]);
-  const [zones, setZones] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [retryKey, setRetryKey] = useState(0);
+  const [data, setData] = useState(null);
   const [selectedBorough, setSelectedBorough] = useState("");
-  const [selectedZone, setSelectedZone] = useState("");
-
-  const [dashboardData, setDashboardData] = useState(null);
-  const [modelData, setModelData] = useState(null);
-  const [monitoringData, setMonitoringData] = useState(null);
+  const [selectedZone, setSelectedZone] = useState(null);
 
   const navItems = useMemo(
     () => [
-      { id: "dashboard", label: "Home Dashboard" },
-      { id: "model", label: "Model Section" },
+      { id: "dashboard", label: "Dashboard" },
+      { id: "model", label: "Model" },
       { id: "monitoring", label: "Monitoring" },
     ],
     []
   );
 
   useEffect(() => {
-    async function loadInitialData() {
-      const boroughList = await getBoroughs();
-      setBoroughs(boroughList);
+    async function loadData() {
+      try {
+        setLoading(true);
+        setError(null);
+        const [
+          summary,
+          zones,
+          predictions,
+          driftMetrics,
+          retrainEvents,
+          weeklyComparison,
+          zonePerformance,
+          timePeriodAnalysis,
+        ] = await Promise.all([
+          getSummary(),
+          getZones(),
+          getPredictions(),
+          getDriftMetrics(),
+          getRetrainEvents(),
+          getWeeklyComparison(),
+          getZonePerformance(),
+          getTimePeriodAnalysis(),
+        ]);
 
-      if (boroughList.length > 0) {
-        const firstBorough = boroughList[0];
-        setSelectedBorough(firstBorough);
+        const nextData = {
+          summary,
+          zones,
+          predictions,
+          driftMetrics,
+          retrainEvents,
+          weeklyComparison,
+          zonePerformance,
+          timePeriodAnalysis,
+        };
+        setData(nextData);
 
-        const zoneList = await getZones(firstBorough);
-        setZones(zoneList);
-
-        if (zoneList.length > 0) {
-          setSelectedZone(zoneList[0]);
-        }
+        const boroughs = getModeledBoroughs(zones);
+        const initialBorough = boroughs[0] || "";
+        const initialZones = getZonesForBorough(zones, initialBorough);
+        const initialZone = initialZones[0]?.id || null;
+        setSelectedBorough(initialBorough);
+        setSelectedZone(initialZone);
+      } catch (loadError) {
+        setError(loadError.message || "Unable to load frontend data.");
+      } finally {
+        setLoading(false);
       }
-
-      const model = await getModelData();
-      const monitoring = await getMonitoringData();
-      setModelData(model);
-      setMonitoringData(monitoring);
     }
 
-    loadInitialData();
-  }, []);
+    loadData();
+  }, [retryKey]);
+
+  const boroughs = useMemo(() => getModeledBoroughs(data?.zones), [data]);
+
+  const zonesForSelectedBorough = useMemo(
+    () => getZonesForBorough(data?.zones, selectedBorough),
+    [data, selectedBorough]
+  );
 
   useEffect(() => {
-    async function loadZones() {
-      if (!selectedBorough) return;
-      const zoneList = await getZones(selectedBorough);
-      setZones(zoneList);
-
-      if (zoneList.length > 0 && !zoneList.includes(selectedZone)) {
-        setSelectedZone(zoneList[0]);
-      }
+    if (!zonesForSelectedBorough.length) return;
+    if (!zonesForSelectedBorough.some((zone) => zone.id === Number(selectedZone))) {
+      setSelectedZone(zonesForSelectedBorough[0].id);
     }
+  }, [zonesForSelectedBorough, selectedZone]);
 
-    loadZones();
-  }, [selectedBorough, selectedZone]);
-
-  useEffect(() => {
-    async function loadDashboardData() {
-      if (!selectedBorough || !selectedZone) return;
-      const data = await getDashboardData(selectedBorough, selectedZone);
-      setDashboardData(data);
-    }
-
-    loadDashboardData();
-  }, [selectedBorough, selectedZone]);
-
-  const summary = dashboardData?.summary;
-  const hourlyForecast = dashboardData?.hourlyForecast || [];
-  const recentPerformance = monitoringData?.recentPerformance || [];
-  const modelFunctions = modelData?.modelFunctions || [];
-  const modelSettings = modelData?.modelSettings || [];
+  const selectedZoneObject = useMemo(
+    () => data?.zones?.zones?.find((zone) => zone.id === Number(selectedZone)) || null,
+    [data, selectedZone]
+  );
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
@@ -98,33 +127,31 @@ export default function App() {
           boroughs={boroughs}
           selectedBorough={selectedBorough}
           onBoroughChange={setSelectedBorough}
-          zones={zones}
+          zones={zonesForSelectedBorough}
           selectedZone={selectedZone}
-          onZoneChange={setSelectedZone}
+          onZoneChange={(zoneId) => setSelectedZone(Number(zoneId))}
+          summary={data?.summary}
         />
 
         <main className="px-6 py-8 lg:px-8">
-          {activeSection === "dashboard" && summary && (
+          {loading && <LoadingState message="Loading exported model data..." />}
+
+          {!loading && error && (
+            <ErrorState message={error} onRetry={() => setRetryKey((value) => value + 1)} />
+          )}
+
+          {!loading && !error && data && activeSection === "dashboard" && selectedZoneObject && (
             <DashboardPage
+              data={data}
               selectedBorough={selectedBorough}
-              selectedZone={selectedZone}
-              summary={summary}
-              hourlyForecast={hourlyForecast}
+              selectedZone={selectedZoneObject}
             />
           )}
 
-          {activeSection === "model" && (
-            <ModelPage
-              modelFunctions={modelFunctions}
-              modelSettings={modelSettings}
-            />
-          )}
+          {!loading && !error && data && activeSection === "model" && <ModelPage data={data} />}
 
-          {activeSection === "monitoring" && summary && (
-            <MonitoringPage
-              summary={summary}
-              recentPerformance={recentPerformance}
-            />
+          {!loading && !error && data && activeSection === "monitoring" && (
+            <MonitoringPage data={data} />
           )}
         </main>
       </div>

@@ -1,0 +1,17 @@
+{
+  "best_model": "lightgbm",
+  "best_test_smape": 22.784245038096458,
+  "best_baseline": "seasonal_lag24",
+  "best_baseline_test_smape": 42.26839609647583,
+  "best_ml_model": "lightgbm",
+  "best_ml_test_smape": 22.784245038096458,
+  "improvement_over_best_baseline_pct": 46.09626306592666,
+  "top_5_lightgbm_features": [
+    "lag_168h",
+    "hour",
+    "lag_24h",
+    "lag_1h",
+    "zone_id"
+  ],
+  "top_20_coverage_pct": 63.04694091121312
+}

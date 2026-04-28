@@ -1,0 +1,186 @@
+{
+  "features": [
+    "lag_168h",
+    "hour",
+    "lag_24h",
+    "lag_1h",
+    "zone_id"
+  ],
+  "thresholds": {
+    "warning": 0.1,
+    "alert": 0.2
+  },
+  "timeseries": [
+    {
+      "week_start": "2024-02-01",
+      "psi_scores": {
+        "lag_168h": 0.013,
+        "hour": 0.0,
+        "lag_24h": 0.008,
+        "lag_1h": 0.0047,
+        "zone_id": 0.0
+      },
+      "ks_p_values": {
+        "lag_168h": 0.0,
+        "hour": 1.0,
+        "lag_24h": 0.0067,
+        "lag_1h": 0.0908,
+        "zone_id": 1.0
+      },
+      "drift_detected": true,
+      "max_psi": 0.013
+    },
+    {
+      "week_start": "2024-02-08",
+      "psi_scores": {
+        "lag_168h": 0.0172,
+        "hour": 0.0,
+        "lag_24h": 0.0043,
+        "lag_1h": 0.0061,
+        "zone_id": 0.0
+      },
+      "ks_p_values": {
+        "lag_168h": 0.0,
+        "hour": 1.0,
+        "lag_24h": 0.6315,
+        "lag_1h": 0.391,
+        "zone_id": 1.0
+      },
+      "drift_detected": true,
+      "max_psi": 0.0172
+    },
+    {
+      "week_start": "2024-02-15",
+      "psi_scores": {
+        "lag_168h": 0.0102,
+        "hour": 0.0,
+        "lag_24h": 0.0078,
+        "lag_1h": 0.0032,
+        "zone_id": 0.0
+      },
+      "ks_p_values": {
+        "lag_168h": 0.0006,
+        "hour": 1.0,
+        "lag_24h": 0.0012,
+        "lag_1h": 0.3167,
+        "zone_id": 1.0
+      },
+      "drift_detected": true,
+      "max_psi": 0.0102
+    },
+    {
+      "week_start": "2024-02-22",
+      "psi_scores": {
+        "lag_168h": 0.0134,
+        "hour": 0.0,
+        "lag_24h": 0.0118,
+        "lag_1h": 0.0103,
+        "zone_id": 0.0
+      },
+      "ks_p_values": {
+        "lag_168h": 0.0,
+        "hour": 1.0,
+        "lag_24h": 0.0001,
+        "lag_1h": 0.0,
+        "zone_id": 1.0
+      },
+      "drift_detected": true,
+      "max_psi": 0.0134
+    },
+    {
+      "week_start": "2024-02-29",
+      "psi_scores": {
+        "lag_168h": 0.0298,
+        "hour": 0.0,
+        "lag_24h": 0.0429,
+        "lag_1h": 0.0391,
+        "zone_id": 0.0
+      },
+      "ks_p_values": {
+        "lag_168h": 0.0,
+        "hour": 1.0,
+        "lag_24h": 0.0,
+        "lag_1h": 0.0,
+        "zone_id": 1.0
+      },
+      "drift_detected": true,
+      "max_psi": 0.0429
+    },
+    {
+      "week_start": "2024-03-07",
+      "psi_scores": {
+        "lag_168h": 0.0713,
+        "hour": 0.0,
+        "lag_24h": 0.0649,
+        "lag_1h": 0.0473,
+        "zone_id": 0.0
+      },
+      "ks_p_values": {
+        "lag_168h": 0.0,
+        "hour": 1.0,
+        "lag_24h": 0.0,
+        "lag_1h": 0.0,
+        "zone_id": 1.0
+      },
+      "drift_detected": true,
+      "max_psi": 0.0713
+    },
+    {
+      "week_start": "2024-03-14",
+      "psi_scores": {
+        "lag_168h": 0.0799,
+        "hour": 0.0,
+        "lag_24h": 0.0627,
+        "lag_1h": 0.0525,
+        "zone_id": 0.0
+      },
+      "ks_p_values": {
+        "lag_168h": 0.0,
+        "hour": 1.0,
+        "lag_24h": 0.0,
+        "lag_1h": 0.0,
+        "zone_id": 1.0
+      },
+      "drift_detected": true,
+      "max_psi": 0.0799
+    },
+    {
+      "week_start": "2024-03-21",
+      "psi_scores": {
+        "lag_168h": 0.0807,
+        "hour": 0.0,
+        "lag_24h": 0.0379,
+        "lag_1h": 0.0309,
+        "zone_id": 0.0
+      },
+      "ks_p_values": {
+        "lag_168h": 0.0,
+        "hour": 1.0,
+        "lag_24h": 0.0,
+        "lag_1h": 0.0,
+        "zone_id": 1.0
+      },
+      "drift_detected": true,
+      "max_psi": 0.0807
+    },
+    {
+      "week_start": "2024-03-28",
+      "psi_scores": {
+        "lag_168h": 0.0791,
+        "hour": 0.0,
+        "lag_24h": 0.0658,
+        "lag_1h": 0.0506,
+        "zone_id": 0.0
+      },
+      "ks_p_values": {
+        "lag_168h": 0.0,
+        "hour": 1.0,
+        "lag_24h": 0.0,
+        "lag_1h": 0.0,
+        "zone_id": 1.0
+      },
+      "drift_detected": true,
+      "max_psi": 0.0791
+    }
+  ]
+}

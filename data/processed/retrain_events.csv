@@ -1,0 +1,9 @@
+timestamp,trigger_reason,model_version,training_data_size,training_duration_seconds
+2024-02-08,adaptive sMAPE >= 20% above reference baseline for 3 consecutive days,adaptive_v2,14400,2.3958033000235446
+2024-02-15,adaptive sMAPE >= 20% above reference baseline for 3 consecutive days,adaptive_v3,14400,1.8141887999954633
+2024-02-22,adaptive sMAPE >= 20% above reference baseline for 3 consecutive days,adaptive_v4,14400,2.6198929999955
+2024-02-29,adaptive sMAPE >= 20% above reference baseline for 3 consecutive days,adaptive_v5,14400,4.506493099994259
+2024-03-07,adaptive sMAPE >= 20% above reference baseline for 3 consecutive days,adaptive_v6,14400,1.2895248999993782
+2024-03-14,adaptive sMAPE >= 20% above reference baseline for 3 consecutive days,adaptive_v7,14400,0.7138175999862142
+2024-03-21,adaptive sMAPE >= 20% above reference baseline for 3 consecutive days,adaptive_v8,14400,2.562153600010788
+2024-03-28,KS-test drift for 3+ important features,adaptive_v9,14400,2.1915357999969274

@@ -1,0 +1,298 @@
+{
+  "zones": [
+    {
+      "zone_id": 48,
+      "zone_name": "Clinton East",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 20.32,
+        "adaptive_smape": 18.53,
+        "static_rmse": 31.97,
+        "adaptive_rmse": 29.32,
+        "improvement_pct": 8.8,
+        "total_predictions": 1440,
+        "avg_actual_demand": 118.41
+      }
+    },
+    {
+      "zone_id": 141,
+      "zone_name": "Lenox Hill West",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 19.78,
+        "adaptive_smape": 20.02,
+        "static_rmse": 23.03,
+        "adaptive_rmse": 23.82,
+        "improvement_pct": -1.17,
+        "total_predictions": 1440,
+        "avg_actual_demand": 107.73
+      }
+    },
+    {
+      "zone_id": 230,
+      "zone_name": "Times Sq/Theatre District",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 22.11,
+        "adaptive_smape": 20.48,
+        "static_rmse": 42.52,
+        "adaptive_rmse": 40.06,
+        "improvement_pct": 7.36,
+        "total_predictions": 1440,
+        "avg_actual_demand": 156.42
+      }
+    },
+    {
+      "zone_id": 163,
+      "zone_name": "Midtown North",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 22.41,
+        "adaptive_smape": 21.13,
+        "static_rmse": 31.43,
+        "adaptive_rmse": 31.0,
+        "improvement_pct": 5.7,
+        "total_predictions": 1440,
+        "avg_actual_demand": 132.31
+      }
+    },
+    {
+      "zone_id": 170,
+      "zone_name": "Murray Hill",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 22.05,
+        "adaptive_smape": 21.25,
+        "static_rmse": 28.21,
+        "adaptive_rmse": 27.69,
+        "improvement_pct": 3.63,
+        "total_predictions": 1440,
+        "avg_actual_demand": 131.58
+      }
+    },
+    {
+      "zone_id": 162,
+      "zone_name": "Midtown East",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 22.43,
+        "adaptive_smape": 21.29,
+        "static_rmse": 36.89,
+        "adaptive_rmse": 35.17,
+        "improvement_pct": 5.1,
+        "total_predictions": 1440,
+        "avg_actual_demand": 159.54
+      }
+    },
+    {
+      "zone_id": 68,
+      "zone_name": "East Chelsea",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 23.63,
+        "adaptive_smape": 21.74,
+        "static_rmse": 28.66,
+        "adaptive_rmse": 25.97,
+        "improvement_pct": 7.99,
+        "total_predictions": 1440,
+        "avg_actual_demand": 121.84
+      }
+    },
+    {
+      "zone_id": 164,
+      "zone_name": "Midtown South",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 23.21,
+        "adaptive_smape": 21.82,
+        "static_rmse": 26.31,
+        "adaptive_rmse": 25.07,
+        "improvement_pct": 5.97,
+        "total_predictions": 1440,
+        "avg_actual_demand": 104.82
+      }
+    },
+    {
+      "zone_id": 186,
+      "zone_name": "Penn Station/Madison Sq West",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 24.61,
+        "adaptive_smape": 23.62,
+        "static_rmse": 39.41,
+        "adaptive_rmse": 38.38,
+        "improvement_pct": 4.01,
+        "total_predictions": 1440,
+        "avg_actual_demand": 149.43
+      }
+    },
+    {
+      "zone_id": 239,
+      "zone_name": "Upper West Side South",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 25.64,
+        "adaptive_smape": 24.02,
+        "static_rmse": 31.06,
+        "adaptive_rmse": 30.81,
+        "improvement_pct": 6.34,
+        "total_predictions": 1440,
+        "avg_actual_demand": 134.21
+      }
+    },
+    {
+      "zone_id": 249,
+      "zone_name": "West Village",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 25.19,
+        "adaptive_smape": 24.25,
+        "static_rmse": 39.16,
+        "adaptive_rmse": 35.25,
+        "improvement_pct": 3.72,
+        "total_predictions": 1440,
+        "avg_actual_demand": 112.92
+      }
+    },
+    {
+      "zone_id": 234,
+      "zone_name": "Union Sq",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 26.53,
+        "adaptive_smape": 24.53,
+        "static_rmse": 31.84,
+        "adaptive_rmse": 29.44,
+        "improvement_pct": 7.53,
+        "total_predictions": 1440,
+        "avg_actual_demand": 126.22
+      }
+    },
+    {
+      "zone_id": 161,
+      "zone_name": "Midtown Center",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 26.01,
+        "adaptive_smape": 24.68,
+        "static_rmse": 51.36,
+        "adaptive_rmse": 50.36,
+        "improvement_pct": 5.1,
+        "total_predictions": 1440,
+        "avg_actual_demand": 215.53
+      }
+    },
+    {
+      "zone_id": 140,
+      "zone_name": "Lenox Hill East",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 24.81,
+        "adaptive_smape": 25.06,
+        "static_rmse": 20.58,
+        "adaptive_rmse": 22.66,
+        "improvement_pct": -0.99,
+        "total_predictions": 1440,
+        "avg_actual_demand": 92.4
+      }
+    },
+    {
+      "zone_id": 237,
+      "zone_name": "Upper East Side South",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 25.75,
+        "adaptive_smape": 25.11,
+        "static_rmse": 42.42,
+        "adaptive_rmse": 44.01,
+        "improvement_pct": 2.46,
+        "total_predictions": 1440,
+        "avg_actual_demand": 205.85
+      }
+    },
+    {
+      "zone_id": 79,
+      "zone_name": "East Village",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 28.38,
+        "adaptive_smape": 26.14,
+        "static_rmse": 56.73,
+        "adaptive_rmse": 48.11,
+        "improvement_pct": 7.86,
+        "total_predictions": 1440,
+        "avg_actual_demand": 117.37
+      }
+    },
+    {
+      "zone_id": 132,
+      "zone_name": "JFK Airport",
+      "borough": "Queens",
+      "metrics": {
+        "static_smape": 26.93,
+        "adaptive_smape": 26.55,
+        "static_rmse": 51.63,
+        "adaptive_rmse": 49.79,
+        "improvement_pct": 1.4,
+        "total_predictions": 1440,
+        "avg_actual_demand": 197.57
+      }
+    },
+    {
+      "zone_id": 142,
+      "zone_name": "Lincoln Square East",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 30.55,
+        "adaptive_smape": 27.8,
+        "static_rmse": 48.2,
+        "adaptive_rmse": 47.24,
+        "improvement_pct": 9.0,
+        "total_predictions": 1440,
+        "avg_actual_demand": 147.38
+      }
+    },
+    {
+      "zone_id": 236,
+      "zone_name": "Upper East Side North",
+      "borough": "Manhattan",
+      "metrics": {
+        "static_smape": 31.44,
+        "adaptive_smape": 30.02,
+        "static_rmse": 46.78,
+        "adaptive_rmse": 46.69,
+        "improvement_pct": 4.52,
+        "total_predictions": 1440,
+        "avg_actual_demand": 194.47
+      }
+    },
+    {
+      "zone_id": 138,
+      "zone_name": "LaGuardia Airport",
+      "borough": "Queens",
+      "metrics": {
+        "static_smape": 47.07,
+        "adaptive_smape": 46.98,
+        "static_rmse": 44.68,
+        "adaptive_rmse": 41.92,
+        "improvement_pct": 0.2,
+        "total_predictions": 1440,
+        "avg_actual_demand": 135.3
+      }
+    }
+  ],
+  "by_borough": {
+    "Manhattan": {
+      "avg_static_smape": 24.71,
+      "avg_adaptive_smape": 23.42,
+      "improvement": 5.25,
+      "zone_count": 18
+    },
+    "Queens": {
+      "avg_static_smape": 37.0,
+      "avg_adaptive_smape": 36.77,
+      "improvement": 0.63,
+      "zone_count": 2
+    }
+  }
+}

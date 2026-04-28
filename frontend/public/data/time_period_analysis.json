@@ -1,0 +1,172 @@
+{
+  "rush_hour": {
+    "static_smape": 16.37,
+    "adaptive_smape": 16.69,
+    "improvement": -1.97,
+    "definition": "7-9 AM and 5-7 PM weekdays"
+  },
+  "off_peak": {
+    "static_smape": 27.97,
+    "adaptive_smape": 26.46,
+    "improvement": 5.4,
+    "definition": "All non-rush-hour periods"
+  },
+  "weekend": {
+    "static_smape": 26.71,
+    "adaptive_smape": 25.24,
+    "improvement": 5.52,
+    "definition": "Saturday and Sunday"
+  },
+  "weekday": {
+    "static_smape": 25.61,
+    "adaptive_smape": 24.54,
+    "improvement": 4.17,
+    "definition": "Monday through Friday"
+  },
+  "by_hour": [
+    {
+      "hour": 0,
+      "static_smape": 35.71,
+      "adaptive_smape": 32.86,
+      "avg_demand": 91.86
+    },
+    {
+      "hour": 1,
+      "static_smape": 43.29,
+      "adaptive_smape": 39.79,
+      "avg_demand": 54.02
+    },
+    {
+      "hour": 2,
+      "static_smape": 53.33,
+      "adaptive_smape": 52.67,
+      "avg_demand": 31.45
+    },
+    {
+      "hour": 3,
+      "static_smape": 62.25,
+      "adaptive_smape": 58.03,
+      "avg_demand": 22.19
+    },
+    {
+      "hour": 4,
+      "static_smape": 55.41,
+      "adaptive_smape": 49.27,
+      "avg_demand": 16.25
+    },
+    {
+      "hour": 5,
+      "static_smape": 44.44,
+      "adaptive_smape": 41.74,
+      "avg_demand": 18.28
+    },
+    {
+      "hour": 6,
+      "static_smape": 35.37,
+      "adaptive_smape": 33.63,
+      "avg_demand": 41.57
+    },
+    {
+      "hour": 7,
+      "static_smape": 23.51,
+      "adaptive_smape": 23.83,
+      "avg_demand": 84.71
+    },
+    {
+      "hour": 8,
+      "static_smape": 19.65,
+      "adaptive_smape": 19.88,
+      "avg_demand": 122.69
+    },
+    {
+      "hour": 9,
+      "static_smape": 15.76,
+      "adaptive_smape": 16.48,
+      "avg_demand": 141.11
+    },
+    {
+      "hour": 10,
+      "static_smape": 14.0,
+      "adaptive_smape": 13.58,
+      "avg_demand": 152.78
+    },
+    {
+      "hour": 11,
+      "static_smape": 13.23,
+      "adaptive_smape": 13.21,
+      "avg_demand": 164.21
+    },
+    {
+      "hour": 12,
+      "static_smape": 12.16,
+      "adaptive_smape": 12.31,
+      "avg_demand": 180.77
+    },
+    {
+      "hour": 13,
+      "static_smape": 12.25,
+      "adaptive_smape": 12.07,
+      "avg_demand": 187.56
+    },
+    {
+      "hour": 14,
+      "static_smape": 13.03,
+      "adaptive_smape": 12.65,
+      "avg_demand": 203.67
+    },
+    {
+      "hour": 15,
+      "static_smape": 13.47,
+      "adaptive_smape": 12.84,
+      "avg_demand": 208.32
+    },
+    {
+      "hour": 16,
+      "static_smape": 13.83,
+      "adaptive_smape": 13.13,
+      "avg_demand": 216.18
+    },
+    {
+      "hour": 17,
+      "static_smape": 13.63,
+      "adaptive_smape": 13.83,
+      "avg_demand": 239.09
+    },
+    {
+      "hour": 18,
+      "static_smape": 14.6,
+      "adaptive_smape": 15.01,
+      "avg_demand": 253.84
+    },
+    {
+      "hour": 19,
+      "static_smape": 17.48,
+      "adaptive_smape": 16.99,
+      "avg_demand": 229.11
+    },
+    {
+      "hour": 20,
+      "static_smape": 18.97,
+      "adaptive_smape": 17.34,
+      "avg_demand": 211.98
+    },
+    {
+      "hour": 21,
+      "static_smape": 20.26,
+      "adaptive_smape": 18.94,
+      "avg_demand": 218.23
+    },
+    {
+      "hour": 22,
+      "static_smape": 23.13,
+      "adaptive_smape": 22.52,
+      "avg_demand": 198.33
+    },
+    {
+      "hour": 23,
+      "static_smape": 33.84,
+      "adaptive_smape": 31.42,
+      "avg_demand": 145.4
+    }
+  ]
+}
