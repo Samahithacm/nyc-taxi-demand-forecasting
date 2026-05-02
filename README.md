@@ -1,6 +1,17 @@
 # NYC Taxi Demand Forecasting with Adaptive MLOps Pipeline
 
+## Demo Video
+
+Watch our 10-minute project walkthrough explaining the system architecture, ML pipeline, drift detection, and full-stack implementation.
+
+[![Watch the Video](https://img.shields.io/badge/YouTube-Watch_Demo-red?style=for-the-badge&logo=youtube)](https://youtu.be/-3Jlx_Up2IE)
+
+Direct link: https://youtu.be/-3Jlx_Up2IE
+
+## Overview
+
 An end-to-end MLOps system for forecasting NYC taxi demand with drift detection, adaptive retraining, and a full-stack web application. The project combines a production-oriented machine learning pipeline, a FastAPI model-serving backend, and a React frontend for predictions, monitoring, and model analysis.
+
 
 ## Key Features
 
