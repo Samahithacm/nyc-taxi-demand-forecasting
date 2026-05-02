@@ -1,112 +1,242 @@
 # NYC Taxi Demand Forecasting with Adaptive MLOps Pipeline
 
-## Project Description
+An end-to-end MLOps system for forecasting NYC taxi demand with drift detection, adaptive retraining, and a full-stack web application. The project combines a production-oriented machine learning pipeline, a FastAPI model-serving backend, and a React frontend for predictions, monitoring, and model analysis.
 
-This project develops a production-grade machine learning system for forecasting hourly taxi demand across NYC taxi zones. Unlike traditional one-time models, this project simulates a complete MLOps pipeline with automated monitoring, drift detection, and model retraining capabilities.
+## Key Features
 
-The system predicts taxi demand one hour ahead for each pickup zone, enabling taxi companies to optimize driver distribution and reduce customer wait times. The key innovation is demonstrating **when and why model retraining matters** by comparing a static model (trained once) against an adaptive model (retrained based on drift signals).
+- LightGBM forecasting model achieving 22.78% test sMAPE, 46.10% better than naive baselines
+- Drift detection using PSI and KS-test
+- Adaptive retraining with 8 retrain events during a 60-day production simulation
+- Statistical validation showing 4.61% improvement (p=0.0118)
+- Full-stack application with React 19 frontend and FastAPI backend with JWT authentication
 
-## Project Timeline (8 Weeks)
+## Results Summary
 
-| Week | Milestone |
-|------|-----------|
-| 1-2 | Data collection, cleaning, and exploratory analysis |
-| 3-4 | Feature engineering, baseline models, and ML model training |
-| 5-6 | Monitoring infrastructure and drift detection implementation |
-| 7 | Production simulation (static vs adaptive comparison) |
-| 8 | Interactive dashboard, documentation, and final report |
+| Metric | Result |
+|---|---|
+| Best Model | LightGBM |
+| Test sMAPE | 22.78% |
+| Improvement over baseline | 46.10% |
+| Static vs Adaptive improvement | 4.61% (p=0.0118) |
+| Total trips processed | 9,554,757 |
+| Zones covered | 20 (top 63.05% of demand) |
+| Features engineered | 30+ |
+| Retrain events in simulation | 8 |
 
-## Project Goals
+## Architecture
 
-### Primary Goals
+The project is organized into three layers:
 
-1. **Accurate Demand Forecasting**: Achieve MAPE < 25% on test data, outperforming naive baselines by at least 30%
+- **ML Pipeline (5 Notebooks):** Data processing, feature engineering, model training, drift simulation, and data export.
+- **FastAPI Backend (Port 8000):** JWT authentication, rate limiting, and model serving.
+- **React Frontend (Port 5173):** Six interactive pages for forecasting, analysis, monitoring, and model details.
 
-2. **Demonstrate Adaptive Learning Value**: Show ≥10% error reduction of adaptive model over static model during drift periods with statistical significance (p < 0.05)
+## Getting Started
 
-3. **Automated Drift Detection**: Implement monitoring system that detects distribution shifts and triggers retraining within 24 hours of performance degradation
+### Prerequisites
 
+- Python 3.11
+- Node.js 18+
+- Git
 
-### Secondary Goals 
+### Clone
 
-- Zone-specific analysis (Manhattan vs outer boroughs, rush hour vs off-peak)
-- Weather integration for improved accuracy during adverse conditions
-- Interactive Streamlit dashboard for exploring predictions and drift alerts
-- Demand spike explainability using historical pattern retrieval
+```bash
+git clone https://github.com/Samahithacm/nyc-taxi-demand-forecasting.git
+cd nyc-taxi-demand-forecasting
+```
 
-## Data Collection Plan
-
-### Primary Data Source
-
-**NYC Taxi & Limousine Commission (TLC) Trip Record Data**
-- **URL**: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
-- **Alternative**: AWS Open Data Registry (https://registry.opendata.aws/nyc-tlc-trip-records-pds/)
-- **Format**: Parquet files (compressed, ~3-4 GB for 3 months)
-- **Scope**: Yellow Taxi data, January-March 2024 (30-50 million trip records)
-
-
-### Supporting Data
-
-**Taxi Zone Lookup**: https://d37ci6vzurychx.cloudfront.net/misc/taxi+_zone_lookup.csv (maps LocationID to borough/zone)
-
-**Weather Data**: NOAA ISD for temperature, precipitation, snow
-
-### Data Processing
-
-Aggregate trips to hourly demand per zone, create complete time grid (fill missing with 0), drop invalid records, validate ranges, store as Parquet.
-
-## Modeling Plan
-
-**Target Variable**: Number of taxi pickups in next hour for each zone (1-hour ahead forecasting)
-
-**Features**: Temporal (hour, day of week, holidays), lag features (1h, 24h, 168h ago), rolling stats (mean/std over 6h, 24h, 7d), zone attributes
-
-**Models**: Baselines (naive, seasonal naive, ARIMA, Prophet), Primary (LightGBM), Alternative (XGBoost)
-
-**Evaluation**: Time-series split 70/15/15, Metrics: MAPE < 25%, RMSE, sMAPE
-
-## Monitoring & Production Simulation
-
-**Drift Detection**:
-- PSI (Population Stability Index) for feature distribution shifts
-- KS-test for statistical significance
-- Monitor top 5 important features weekly
-
-**Retrain Triggers**:
-- Rolling MAPE increases ≥20% for 3+ days
-- PSI > 0.2 for 3+ features
-- Minimum 7 days between retrains
-
-## Backend API
-
-The FastAPI backend serves model health, zone metadata, JWT authentication, and real prediction responses from the trained LightGBM artifacts plus the generated prediction lookup table.
-
-Start the backend:
+### Backend Setup
 
 ```bash
 cd backend
 pip install -r requirements.txt
 copy .env.example .env
-uvicorn app.main:app --reload --port 8000
 ```
 
-Start the frontend:
+On macOS or Linux, use:
+
+```bash
+cp .env.example .env
+```
+
+### Frontend Setup
 
 ```bash
 cd frontend
 npm install
+```
+
+## Running the Application
+
+### Terminal 1: Backend
+
+```bash
+cd backend
+uvicorn app.main:app --reload --port 8000
+```
+
+### Terminal 2: Frontend
+
+```bash
+cd frontend
 npm run dev
 ```
 
-URLs:
+Visit:
 
-- Frontend: `http://localhost:5173`
-- API docs: `http://localhost:8000/docs`
-- API health: `http://localhost:8000/api/health`
+- Frontend: http://localhost:5173
+- API Docs: http://localhost:8000/docs
+- Default credentials: `demo` / `demo123`
 
-Default demo credentials:
+## Methodology
 
-- Username: `demo`
-- Password: `demo123`
+### Data Pipeline
 
-The frontend uses the backend API for Live Prediction when available. If the backend is offline, it falls back gracefully to static JSON data in `frontend/public/data/`.
+The pipeline uses NYC TLC Yellow Taxi data, processing 9.5M trips into 240,917 hourly observations across the top 20 pickup zones. These zones represent the highest-demand areas and cover 63.05% of total demand.
+
+### Feature Engineering
+
+The model uses 30+ engineered features, including:
+
+- Lag features: 1h, 2h, 3h, 24h, and 168h
+- Rolling statistics for short-term and weekly demand patterns
+- Temporal features such as hour, day of week, weekend, and holiday-style calendar signals
+- Cyclical encoding for periodic time features
+- Zone-level features for location-specific demand behavior
+
+### Models Compared
+
+| Model | Test sMAPE | Notes |
+|---|---:|---|
+| Naive Last Hour | 52.56% | Baseline |
+| Seasonal Naive 24h | 51.62% | Daily seasonal baseline |
+| Moving Average | 50.21% | Rolling average baseline |
+| LightGBM | 22.78% | Selected model |
+| XGBoost | 23.45% | Strong alternative |
+
+## MLOps Pipeline
+
+### Drift Detection Methods
+
+- PSI with threshold 0.2
+- KS-test with p-value threshold 0.05
+
+### Retrain Triggers
+
+Retraining is triggered when any of the following conditions are met:
+
+- 7-day rolling sMAPE is at least 20% above baseline for 3+ consecutive days
+- PSI > 0.2 for 3+ features
+- KS-test p-value < 0.05 for 3+ features
+
+### Constraints
+
+- Minimum 7 days between retrains
+- Maximum 4 retrains per month
+
+## Production Simulation Results
+
+- Reference period: Jan 1-30, 2024 (training)
+- Simulation period: Feb 1 - Mar 31, 2024 (8 weeks)
+- Comparison: Static model vs adaptive retraining pipeline
+- Result: 4.61% improvement with statistical significance (p=0.0118)
+
+The simulation showed that adaptive retraining improved model performance over the static model while respecting retraining constraints and avoiding excessive retrain frequency.
+
+## Frontend Features
+
+- Dashboard - KPI overview
+- Live Prediction - On-demand predictions
+- Forecast Explorer - Historical analysis with date filtering
+- Zone Analysis - Interactive NYC map
+- Model Details - Architecture and performance
+- Monitoring - Drift detection and retrain timeline
+
+## Backend Features
+
+- JWT Authentication with bcrypt
+- Rate limiting: 10/min public, 60/min authenticated
+- CORS configuration
+- Auto-generated OpenAPI docs at `/docs`
+- Graceful fallback to static JSON
+- Request logging
+
+## API Endpoints
+
+| Method | Endpoint | Authentication | Description |
+|---|---|---|---|
+| GET | `/` | No auth | API info |
+| GET | `/api/health` | No auth | Health check |
+| POST | `/api/auth/login` | No auth | Get JWT token |
+| GET | `/api/zones` | No auth | List taxi zones |
+| GET | `/api/predict/public` | No auth | Public prediction (10/min) |
+| POST | `/api/predict` | Auth required | Authenticated prediction (60/min) |
+
+## Tech Stack
+
+### ML/Data
+
+- Python 3.11
+- pandas
+- numpy
+- LightGBM
+- XGBoost
+- scipy
+
+### Backend
+
+- FastAPI 0.109
+- Pydantic v2
+- python-jose (JWT)
+- slowapi (rate limiting)
+- joblib
+
+### Frontend
+
+- React 19
+- Vite 8
+- Tailwind CSS v4
+- Recharts
+- Leaflet
+- react-leaflet
+- lucide-react
+
+## Project Structure
+
+```text
+.
+├── backend/     # FastAPI Server
+├── frontend/    # React Application
+├── notebooks/   # 5 Jupyter notebooks
+├── models/      # Trained models
+└── data/        # Raw and processed data
+```
+
+## Notebooks
+
+- `preliminary_data_visualizations.ipynb` - Initial EDA and baselines
+- `02_ml_modeling.ipynb` - LightGBM training and evaluation
+- `03_drift_and_retrain.ipynb` - Drift detection and production simulation
+- `04_export_for_frontend.ipynb` - Data export to JSON
+- `05_generate_prediction_lookup.ipynb` - Pre-compute prediction scenarios
+
+## Future Improvements
+
+- Multi-horizon forecasting
+- Weather data integration
+- Spatial features
+- Ensemble models
+- Real-time data pipeline
+- Cloud deployment
+
+## Team
+
+- Samahitha CM
+- Ankith
+- Priyanshu Bansal
+
+## Acknowledgments
+
+- NYC Taxi & Limousine Commission
+- Boston University Data Science course staff
