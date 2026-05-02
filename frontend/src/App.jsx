@@ -11,6 +11,7 @@ import ZoneAnalysisPage from "./pages/ZoneAnalysisPage";
 import {
   getDriftMetrics,
   getPredictions,
+  loginToAPI,
   getRetrainEvents,
   getSummary,
   getTimePeriodAnalysis,
@@ -50,6 +51,12 @@ export default function App() {
     ],
     []
   );
+
+  useEffect(() => {
+    loginToAPI().catch((apiLoginError) => {
+      console.warn("Backend API login skipped; frontend will use public API or local fallback.", apiLoginError);
+    });
+  }, []);
 
   useEffect(() => {
     async function loadData() {

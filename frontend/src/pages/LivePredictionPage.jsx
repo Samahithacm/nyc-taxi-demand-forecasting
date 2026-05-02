@@ -4,7 +4,7 @@ import BarChartCard from "../components/charts/BarChartCard";
 import ErrorState from "../components/ui/ErrorState";
 import LoadingState from "../components/ui/LoadingState";
 import ZoneSelector from "../components/ui/ZoneSelector";
-import { getPredictionLookup } from "../services/taxiApi";
+import { checkAPIHealth, getPredictionLookup, predictFromAPI } from "../services/taxiApi";
 
 const DAY_OPTIONS = [
   { value: 0, label: "Mon" },
@@ -21,6 +21,18 @@ const CATEGORY_STYLES = {
   Medium: "border-cyan-400/30 bg-cyan-400/10 text-cyan-200",
   High: "border-amber-400/30 bg-amber-400/10 text-amber-200",
   "Very High": "border-red-400/30 bg-red-400/10 text-red-200",
+};
+
+const API_STATUS_STYLES = {
+  checking: "border-slate-400/30 bg-slate-400/10 text-slate-200",
+  online: "border-emerald-400/30 bg-emerald-400/10 text-emerald-200",
+  fallback: "border-amber-400/30 bg-amber-400/10 text-amber-200",
+};
+
+const API_STATUS_LABELS = {
+  checking: "Checking API",
+  online: "Live API",
+  fallback: "Cached Data",
 };
 
 function formatHour(hour) {
@@ -50,6 +62,9 @@ export default function LivePredictionPage({ zones, boroughs }) {
   const [predictionLookup, setPredictionLookup] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [apiStatus, setApiStatus] = useState("checking");
+  const [predictionLoading, setPredictionLoading] = useState(false);
+  const [predictionError, setPredictionError] = useState(null);
 
   useEffect(() => {
     let ignore = false;
@@ -68,6 +83,20 @@ export default function LivePredictionPage({ zones, boroughs }) {
     }
 
     loadLookup();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function loadAPIStatus() {
+      const health = await checkAPIHealth();
+      if (!ignore) setApiStatus(health.model_loaded ? "online" : "fallback");
+    }
+
+    loadAPIStatus();
     return () => {
       ignore = true;
     };
@@ -107,10 +136,22 @@ export default function LivePredictionPage({ zones, boroughs }) {
     setPrediction(null);
   }
 
-  function handlePredict() {
-    if (!selectedZone || !predictionLookup) return;
-    const key = `${selectedZone}_${selectedHour}_${selectedDay}`;
-    setPrediction(predictionLookup.predictions[key] || null);
+  async function handlePredict() {
+    if (!selectedZone) return;
+
+    try {
+      setPredictionLoading(true);
+      setPredictionError(null);
+      const result = await predictFromAPI(selectedZone, selectedHour, selectedDay);
+      setPrediction(result);
+    } catch (predictError) {
+      setPrediction(null);
+      setPredictionError(
+        predictError.message || "Unable to generate prediction for this scenario."
+      );
+    } finally {
+      setPredictionLoading(false);
+    }
   }
 
   const categoryClass = CATEGORY_STYLES[prediction?.demand_category] || CATEGORY_STYLES.Medium;
@@ -120,9 +161,16 @@ export default function LivePredictionPage({ zones, boroughs }) {
   return (
     <div className="space-y-8">
       <header className="rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-slate-900 via-slate-900 to-cyan-950/40 p-8 shadow-2xl">
-        <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-300">
-          <Sparkles size={14} />
-          Live Prediction
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-300">
+            <Sparkles size={14} />
+            Live Prediction
+          </span>
+          <span
+            className={`inline-flex rounded-full border px-3 py-1 text-xs font-medium ${API_STATUS_STYLES[apiStatus]}`}
+          >
+            {API_STATUS_LABELS[apiStatus]}
+          </span>
         </div>
         <h2 className="text-4xl font-semibold tracking-tight sm:text-5xl">Predict Taxi Demand</h2>
         <p className="mt-4 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">
@@ -207,25 +255,27 @@ export default function LivePredictionPage({ zones, boroughs }) {
           <button
             type="button"
             onClick={handlePredict}
-            disabled={!selectedZone || loading || Boolean(error)}
+            disabled={!selectedZone || predictionLoading}
             className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-cyan-400 px-5 py-4 text-base font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400 sm:w-auto"
           >
             <Sparkles size={18} />
-            Predict Demand
+            {predictionLoading ? "Predicting..." : "Predict Demand"}
           </button>
         </div>
       </section>
 
       {loading && <LoadingState message="Loading prediction lookup..." />}
       {!loading && error && <ErrorState message={error} />}
+      {predictionLoading && <LoadingState message="Requesting prediction..." />}
+      {predictionError && <ErrorState message={predictionError} />}
 
-      {!loading && !error && !prediction && (
+      {!predictionLoading && !predictionError && !prediction && (
         <div className="rounded-3xl border border-white/10 bg-white/5 p-8 text-center text-slate-300">
           Select a scenario and press Predict Demand to view the forecast.
         </div>
       )}
 
-      {!loading && !error && prediction && (
+      {!predictionLoading && prediction && (
         <section className="space-y-6 transition-all duration-300">
           <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
             <div className="rounded-3xl border border-cyan-400/20 bg-cyan-400/10 p-8 shadow-2xl">

@@ -76,3 +76,37 @@ Aggregate trips to hourly demand per zone, create complete time grid (fill missi
 - Rolling MAPE increases ≥20% for 3+ days
 - PSI > 0.2 for 3+ features
 - Minimum 7 days between retrains
+
+## Backend API
+
+The FastAPI backend serves model health, zone metadata, JWT authentication, and real prediction responses from the trained LightGBM artifacts plus the generated prediction lookup table.
+
+Start the backend:
+
+```bash
+cd backend
+pip install -r requirements.txt
+copy .env.example .env
+uvicorn app.main:app --reload --port 8000
+```
+
+Start the frontend:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+URLs:
+
+- Frontend: `http://localhost:5173`
+- API docs: `http://localhost:8000/docs`
+- API health: `http://localhost:8000/api/health`
+
+Default demo credentials:
+
+- Username: `demo`
+- Password: `demo123`
+
+The frontend uses the backend API for Live Prediction when available. If the backend is offline, it falls back gracefully to static JSON data in `frontend/public/data/`.
