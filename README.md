@@ -4,7 +4,7 @@
 
 Watch our 10-minute project walkthrough explaining the system architecture, ML pipeline, drift detection, and full-stack implementation.
 
-[![Watch the Video](https://img.shields.io/badge/YouTube-Watch_Demo-red?style=for-the-badge&logo=youtube)](https://youtu.be/-3Jlx_Up2IE)
+[![NYC Taxi Demand Forecasting Demo](https://img.youtube.com/vi/-3Jlx_Up2IE/maxresdefault.jpg)](https://youtu.be/-3Jlx_Up2IE)
 
 Direct link: https://youtu.be/-3Jlx_Up2IE
 
